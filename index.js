@@ -1,8 +1,11 @@
 'use strict';
 
-import React from 'react';
+import React, {Component} from 'react';
 
-class ChartistGraph extends React.Component {
+const isReact013 = (React.version.substring(0, 4) == '0.13')
+const findDOMNode = isReact013 ? React.findDOMNode : require('react-dom').findDOMNode;
+
+class ChartistGraph extends Component {
 
   displayName: 'ChartistGraph'
 
@@ -35,7 +38,7 @@ class ChartistGraph extends React.Component {
     if (this.chartist) {
       this.chartist.update(data, options, responsiveOptions);
     } else {
-      this.chartist = new Chartist[type](React.findDOMNode(this), data, options, responsiveOptions);
+      this.chartist = new Chartist[type](findDOMNode(this), data, options, responsiveOptions);
 
       if (config.listener) {
         for (event in config.listener) {
@@ -51,8 +54,8 @@ class ChartistGraph extends React.Component {
   }
 
   render() {
-    let className = this.props.className ? ' ' + this.props.className : ''
-    return React.DOM.div({className: 'ct-chart' + className})
+    const className = this.props.className ? ' ' + this.props.className : ''
+    return (<div className={'ct-chart' + className} />)
   }
 
 }
